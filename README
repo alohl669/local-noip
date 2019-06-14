@@ -2,7 +2,7 @@ NOTAS
 - Script de mailing [creado]
 
 - Script que comprueba estado de conexión
--- plantilla crontab
+-- plantilla crontab --Obligatoriamente esta plantilla tiene que ser propiedad de root:root
 
 - Script que comprueba si ha cambiado la ip
 -- variable en texto plano
