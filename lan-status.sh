@@ -8,7 +8,10 @@
 
 # Esta linea por ahora devuelva la primera palabra de la linea que nos ha 
 # devuelto el ping
-# Queremos que sea la ultima palabra, pues cuando la conexion falla al hacer
-# ping, se nos devuelve "UNREACHABLE", los cual nos viene muy bien para
-# jugar con logica booleana
-ping -c 1 google.com | grep inet | awk '{ print $1; }'
+# Buscamos la parte de estado donde si se realiza la conexion nos informa de 0% errores
+#ping -c 1 google.com | grep packets | awk '{ print $6 }'
+#
+#Y lo metemos en una variable de bash para trabajar con ella
+#Variable ploss (Packet Loss)
+ploss=$(ping -c 1 google.com | grep packets | awk '{ print $6 }')
+

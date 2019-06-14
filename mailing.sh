@@ -1,5 +1,6 @@
+#!/bin/bash
 pname=$(curl ifconfig.me)
-destino="daviniadelarosa@gmail.com alohl669@protonmail.com alex.martinez.25.12@gmail.com"
+destino="alohl669@protonmail.com"
 autor="admin@drh-test.es"
 asunto="[DRH-TEST]Reinicio del Servidor y cambio de IP"
 mensaje="La última dirección IP conocida es: 
