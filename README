@@ -8,3 +8,5 @@ NOTAS
 -- variable en texto plano
 
 - Aplicacion
+
+-Se necesita de un scrip en la aplicacion misma que establezca los permisos de forma automatica para ser ejecutado como root
