@@ -18,7 +18,7 @@ ploss=$(ping -c 1 google.com | grep packets | awk '{ print $6 }')
 #comenzamos
 if
 	[ "$ploss" = "0%" ]; then
-	echo "guay tio" #aqui sustituimos por sh mailing.sh
+	sh mailing.sh	#echo "guay tio" #aqui sustituimos por sh mailing.sh
 else
 	echo "nada guay tio" #aqui se incrustaran un sh que modifique el crontab para hacer comprobaciones periodicas
 fi

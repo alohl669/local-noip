@@ -1,5 +1,5 @@
 #!/bin/bash
-pname=$(curl ifconfig.me)
+ipname=$(curl ifconfig.me)
 destino="alohl669@protonmail.com"
 autor="admin@drh-test.es"
 asunto="[DRH-TEST]Reinicio del Servidor y cambio de IP"
