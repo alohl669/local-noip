@@ -10,5 +10,6 @@ ruta=$(pwd)
 #
 echo "@reboot root sleep 30 ; sh $ruta/net-status.sh" >> /etc/crontab
 cp /etc/crontab crontab.tipo
-chown root:root equal-ip.sh lan-status.sh mailing.sh
-chmod 754 equal-ip.sh lan-status.sh mailing.sh
+#chown root:root equal-ip.sh lan-status.sh mailing.sh
+#chmod 754 equal-ip.sh lan-status.sh mailing.sh
+#cancelado tema permisos por problemas con cron.
