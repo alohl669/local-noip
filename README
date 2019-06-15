@@ -1,7 +1,9 @@
 NOTAS
+Antes de usar nada se debe tener bien configurado sendemail o sendmail
+si como tener instalado curl
 - Script de mailing [creado]
 
-- Script que comprueba estado de conexión
+- Script que comprueba estado de conexión [en proceso]
 -- plantilla crontab --Obligatoriamente esta plantilla tiene que ser propiedad de root:root
 
 - Script que comprueba si ha cambiado la ip
