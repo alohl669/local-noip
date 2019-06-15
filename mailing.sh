@@ -1,15 +1,20 @@
 #!/bin/bash
+#ya que la finalidad de esta aplicacion es comunicar la ip publica del equipo
+#es importante que tenga en cuenta que en el archivo mensaje.txt debe incluir
+#un mensaje redactado de tal forma que de pie a que la ultima informacion sea
+#la ip, la cual se incluye desde aqui con la variable $ipname
+#no obstante se incluye un mensjae de ejemplo.
+#
+#En el archivo libreta.txt deberá agregar una unica direccion de email por linea
 ipname=$(curl ifconfig.me)
-destino="alohl669@protonmail.com"
-autor="admin@drh-test.es"
-asunto="[DRH-TEST]Reinicio del Servidor y cambio de IP"
-mensaje="La última dirección IP conocida es: 
-$ipname
-
-No olvide añadir el puerto mediante la opción -p XXX."
+destino=$(cat libreta.txt)
+remitente=$(cat remitente.txt)
+asunto=$(cat asunto.txt)
+mensaje=$(cat mensaje.txt)
 
 /usr/sbin/sendmail $destino <<EOF
 Subject: $asunto
-From: $autor
+From: $remitente
 $mensaje
+$ipname
 EOF

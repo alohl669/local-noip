@@ -1,0 +1,6 @@
+Recibe este mensaje porque la IP del servidor ha cambiado.
+Se recomienda que apunte la ip o no borre este mensaje ya que no se le mandará ninguna otra a no ser que cambie de nuevo.
+
+Por favor, no responda a este mensaje.
+
+La última dirección IP conocida es:
