@@ -1,9 +1,11 @@
 #!/bin/bash
+ruta=$(pwd)
 ipnew=$(curl ifconfig.me)
-ipold=$(cat ipold.ip)
+ipold=$(cat $ruta/ipold.ip)
+
+#Comprobamos IP vieja o tomada anteriormente y de no coincidir mandamos la info y registramos la ip
 if
 	[ "$ipnew" != "$ipold"  ];
-	then sh mailing.sh      	#Comprobamos IP vieja o tomada 
-	echo "$ipnew" > ipold.ip	#anteriormente y de no coincidir 
-	                        	#mandamos la info y registramos la ip
+	then sh $ruta/mailing.sh 
+	echo "$ipnew" > $ruta/ipold.ip
 fi

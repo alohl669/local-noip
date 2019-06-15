@@ -6,11 +6,12 @@
 #no obstante se incluye un mensjae de ejemplo.
 #
 #En el archivo libreta.txt deberá agregar una unica direccion de email por linea
+ruta=$(pwd)
 ipname=$(curl ifconfig.me)
-destino=$(cat libreta.txt)
-remitente=$(cat remitente.txt)
-asunto=$(cat asunto.txt)
-mensaje=$(cat mensaje.txt)
+destino=$(cat $ruta/libreta.txt)
+remitente=$(cat $ruta/remitente.txt)
+asunto=$(cat $ruta/asunto.txt)
+mensaje=$(cat $ruta/mensaje.txt)
 
 /usr/sbin/sendmail $destino <<EOF
 Subject: $asunto
