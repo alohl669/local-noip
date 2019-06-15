@@ -20,7 +20,7 @@ alias cpcrntipo='cp crontab.tipo /etc/crontab'
 if [ "$ploss" = "0%" ]; then
 	echo "no" > cronr
 	cpcrntipo
-	sh equal.sh
+	sh equal-ip.sh
 else
 	if [ "$cronsts" != "si" ]; then
 		echo "si" > cronr
