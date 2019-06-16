@@ -17,10 +17,11 @@ mkdir /etc/local-noip
 tar -xzvf correo.tar.gz -C /etc/local-noip
 rm correo.tar.gz
 echo "$ruta" > /etc/local-noip/localnoip.conf
+touch /etc/local-noip/ipold.conf
 #
 #copia de seguridad de crontab y linea de ejecución a mailing por ahora
 #echo "# local-noip se ha instalado en $ruta" >> /etc/crontab
-echo "@reboot root sleep 30 ; sh $ruta/mailing.sh" >> /etc/crontab
+echo "@reboot root sleep 30 ; sh $ruta/equalip.sh" >> /etc/crontab
 cp /etc/crontab /etc/local-noip/crontab.tipo
 #
 #Instalación asistida
