@@ -6,7 +6,7 @@
 #no obstante se incluye un mensjae de ejemplo.
 #
 #En el archivo libreta.txt deberá agregar una unica direccion de email por linea
-ruta=$(cat localnoip.conf)
+ruta=$(cat /etc/local-noip/localnoip.conf)
 ipname=$(curl ifconfig.me)
 destino=$(cat $ruta/correo/libreta.txt)
 remitente=$(cat $ruta/correo/remitente.txt)
