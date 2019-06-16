@@ -1,4 +1,5 @@
 NOTAS
+el instalador debe ejecutarse con permisos de administrador.
 
 Antes de usar nada se debe tener bien configurado sendemail o sendmail
 asi como tener instalado curl
@@ -9,3 +10,12 @@ para ello es suficiente con ejecutar mailing.sh
 Por otra parte La propia aplicacion hara las comprobaciones necesarias en el arranque del servidor, enviado la ip por correo solo si esta ha cambiado o es nueva.
 
 Dispone de varios archivos de texto *.txt para configurar los campos del email que se mandará. como unico requisito para dichos archivos. los emalis de los destinatarios deben de estar en lineas diferentes.
+
+La disposicion de los ficheros es la siguiente:
+/etc/local-noip/localnoip.conf --> Configuración basica de la aplicación.
+/etc/local-noip/correo/asunto.txt --> Contiene el asunto del email.
+/etc/local-noip/correo/libreta.txt --> contiene la lista de direcciones a las que se le mandará la ip por correo
+/etc/local-noip/correo/remitente.txt --> Contiene la dirección de correo que usara la aplicación para enviar el email
+/etc/local-noip/correo/mensaje.txt --> Contiene el mensaje que se enviará en el email
+/etc/local-noip/crontab.tipo --> Copia de Seguridad de crontab
+/etc/local-noip/

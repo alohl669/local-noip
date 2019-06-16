@@ -14,23 +14,24 @@ ruta=$(pwd)
 #
 #La otra opción es dejar localnoip.conf en /etc/local-noip/ Probemos:
 mkdir /etc/local-noip
+tar -xzvf correo.tar.gz /etc/local-noip
 echo "$ruta" > /etc/local-noip/localnoip.conf
 #
 #copia de seguridad de crontab y linea de ejecución a mailing por ahora
 #echo "# local-noip se ha instalado en $ruta" >> /etc/crontab
 echo "@reboot root sleep 30 ; sh $ruta/mailing.sh" >> /etc/crontab
-cp /etc/crontab $ruta/crontab.tipo
+cp /etc/crontab /etc/local-noip/crontab.tipo
 #
 #Instalación asistida
 echo "Por favor, introduzca la dirección de correo que va a usar esta maquina como remitente: "
 read remitente
-echo "$remitente" > $ruta/correo/remitente.txt
+echo "$remitente" > /etc/local-noip/correo/remitente.txt
 echo "Ahora escriba el Asunto del correo: "
 read asunto
-echo "$asunto" > $ruta/correo/asunto.txt
+echo "$asunto" > /etc/local-noip/correo/asunto.txt
 echo "A continuación escriba una única direccion de correo destinatario: "
 read email
-echo "$email" > $ruta/correo/libreta.txt
+echo "$email" > /etc/local-noip/correo/libreta.txt
 #a partir de aqui script que lee las siguientes direcciones de email
 #
 #
@@ -39,7 +40,7 @@ while [ "$email" != "" ]; do
 	echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
 	read email
 	if [ "$email" != ""  ]; then
-	echo "$email" >> $ruta/correo/libreta.txt
+	echo "$email" >> /etc/local-noip/correo/libreta.txt
 	else echo "De acuerdo"
 	fi
 done
