@@ -7,8 +7,9 @@
 #
 #variables
 ruta=$(pwd)
+echo "$ruta" > localnoip.conf
 #
-echo "@reboot root sleep 30 ; sh $ruta/lan-status.sh" >> /etc/crontab
+echo "@reboot root sleep 30 ; sh $ruta/lanstatus.sh" >> /etc/crontab
 cp /etc/crontab $ruta/crontab.tipo
 #chown root:root equal-ip.sh lan-status.sh mailing.sh
 #chmod 755 equal-ip.sh lan-status.sh mailing.sh
