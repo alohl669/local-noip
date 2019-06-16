@@ -11,7 +11,7 @@
 #Y lo metemos en una variable de bash para trabajar con ella
 #Variable ploss (Packet Loss), cronsts(cron-status-repeat) y ruta
 ploss=$(ping -c 1 google.com | grep packets | awk '{ print $6 }')
-ruta=$(pwd)
+ruta=$(cat localnoip.conf)
 cronsts=$(cat $ruta/cronr)
 #comandos
 alias cpcrontab='cp /etc/crontab $ruta/crontab.tipo'
@@ -20,11 +20,11 @@ alias cpcrntipo='cp $ruta/crontab.tipo /etc/crontab'
 if [ "$ploss" = "0%" ]; then
 	echo "no" > $ruta/cronr
 	cpcrntipo
-	sh $ruta/equal-ip.sh
+	sh $ruta/equalip.sh
 else
 	if [ "$cronsts" != "si" ]; then
 		echo "si" > $ruta/cronr
 		cpcrontab
-		echo "00,10,20,30,40,50 * * * * root sh $ruta/lan-status.sh" >> /etc/crontab
+		echo "00,10,20,30,40,50 * * * * root sh $ruta/lanstatus.sh" >> /etc/crontab
 	fi
 fi

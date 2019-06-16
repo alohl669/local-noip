@@ -1,5 +1,5 @@
 #!/bin/bash
-ruta=$(pwd)
+ruta=$(cat localnoip.conf)
 ipnew=$(curl ifconfig.me)
 ipold=$(cat $ruta/ipold.ip)
 
