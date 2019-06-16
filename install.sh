@@ -35,12 +35,13 @@ echo "$email" > $ruta/correo/libreta.txt
 #
 #
 #
-echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
-read email
 while [ "$email" != "" ]; do
-#	echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
-#	read email
+	echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
+	read email
+	if [ "$email" != ""  ]; then
 	echo "$email" >> $ruta/correo/libreta.txt
+	else echo "De acuerdo"
+	fi
 done
 #
 echo "Instalación terminada, muchas gracias."
