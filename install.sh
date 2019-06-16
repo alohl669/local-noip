@@ -14,7 +14,8 @@ ruta=$(pwd)
 #
 #La otra opción es dejar localnoip.conf en /etc/local-noip/ Probemos:
 mkdir /etc/local-noip
-tar -xzvf correo.tar.gz /etc/local-noip
+tar -xzvf correo.tar.gz -C /etc/local-noip
+rm correo.tar.gz
 echo "$ruta" > /etc/local-noip/localnoip.conf
 #
 #copia de seguridad de crontab y linea de ejecución a mailing por ahora
