@@ -7,9 +7,10 @@
 #
 #variables basicas
 ruta=$(pwd)
-echo "$ruta" > localnoip.conf
-#i=0
+echo "$ruta" > localnoip.conf #igual podemos prescindir de este archivo
+#
 #copia de seguridad de crontab y linea de ejecución a mailing por ahora
+echo "# local-noip se ha instalado en $ruta" >> /etc/crontab
 echo "@reboot root sleep 30 ; sh $ruta/mailing.sh" >> /etc/crontab
 cp /etc/crontab $ruta/crontab.tipo
 #
@@ -24,17 +25,9 @@ echo "A continuación escriba una única direccion de correo destinatario: "
 read email
 echo "$email" > $ruta/correo/libreta.txt
 #a partir de aqui script que lee las siguientes direcciones de email
-#for #condicion;
-#do
-#	echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
-#	read email
-#	if [ "$email" != "" ];
-#		then echo "$email" >> $ruta/correo/libreta.txt
-#		#incrementamos el contador
-#		else #ponemos tope al contador
-#	fi
-#done
-#mensaje final
+#
+#
+#
 while [ "$email" != "" ]; do
 	echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
 	read email
