@@ -8,10 +8,10 @@
 #En el archivo libreta.txt deberá agregar una unica direccion de email por linea
 ruta=$(cat localnoip.conf)
 ipname=$(curl ifconfig.me)
-destino=$(cat $ruta/libreta.txt)
-remitente=$(cat $ruta/remitente.txt)
-asunto=$(cat $ruta/asunto.txt)
-mensaje=$(cat $ruta/mensaje.txt)
+destino=$(cat $ruta/correo/libreta.txt)
+remitente=$(cat $ruta/correo/remitente.txt)
+asunto=$(cat $ruta/correo/asunto.txt)
+mensaje=$(cat $ruta/correo/mensaje.txt)
 
 /usr/sbin/sendmail $destino <<EOF
 Subject: $asunto
