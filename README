@@ -2,7 +2,7 @@ NOTAS
 el instalador debe ejecutarse con permisos de administrador.
 
 Antes de usar nada se debe tener bien configurado sendemail o sendmail
-asi como tener instalado curl
+asi como tener instalado curl.
 
 La aplicacion se encarga de enviar por email la ip si esta ha cambiado.
 para ello es suficiente con ejecutar mailing.sh
