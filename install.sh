@@ -14,6 +14,7 @@ ruta=$(pwd)
 #
 #La otra opción es dejar localnoip.conf en /etc/local-noip/ Probemos:
 mkdir /etc/local-noip
+mkdir /etc/local-noip/backup
 tar -xzvf correo.tar.gz -C /etc/local-noip
 rm correo.tar.gz
 echo "$ruta" > /etc/local-noip/localnoip.conf
@@ -23,6 +24,7 @@ touch /etc/local-noip/cronr.conf
 #copia de seguridad de crontab y linea de ejecución a mailing por ahora
 #echo "# local-noip se ha instalado en $ruta" >> /etc/crontab
 echo "@reboot root sleep 30 ; sh $ruta/lanstatus.sh" >> /etc/crontab
+echo "00,10,20,30,40,50 * * * * root sh $ruta/lanstatus.sh" >> /etc/crontab
 cp /etc/crontab /etc/local-noip/crontab.tipo
 #
 #Instalación asistida

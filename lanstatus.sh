@@ -26,6 +26,6 @@ else
 	if [ "$cronsts" != "si" ]; then
 		echo "si" > $ruta/cronr.conf
 		cpcrontab
-		echo "00,10,20,30,40,50 * * * * root sh $rutaapp/lanstatus.sh" >> /etc/crontab
+		echo "05,15,25,35,45,55 * * * * root sh $rutaapp/lanstatus.sh" >> /etc/crontab
 	fi
 fi
