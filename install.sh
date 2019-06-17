@@ -24,7 +24,7 @@ touch /etc/local-noip/cronr.conf
 #copia de seguridad de crontab y linea de ejecución a mailing por ahora
 #echo "# local-noip se ha instalado en $ruta" >> /etc/crontab
 echo "@reboot root sleep 30 ; sh $ruta/lanstatus.sh" >> /etc/crontab
-echo "00,10,20,30,40,50 * * * * root sh $rutaapp/lanstatus.sh" >> /etc/crontab
+echo "00,10,20,30,40,50 * * * * root sh $ruta/lanstatus.sh" >> /etc/crontab
 cp /etc/crontab /etc/local-noip/crontab.tipo
 #
 #Instalación asistida
