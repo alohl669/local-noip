@@ -7,9 +7,18 @@ rutaapp=$(pwd)
 mkdir /etc/local-noip
 mkdir /etc/local-noip/backup
 
-#esta parte hay que revisarla, paso de tener un tar
-tar -xzvf correo.tar.gz -C /etc/local-noip
-rm correo.tar.gz
+#Creamos los archivos para la funcion de mailing
+touch /etc/local-noip/correo/asunto.txt
+touch /etc/local-noip/correo/libreta.txt
+touch /etc/local-noip/correo/remitente.txt
+cat > /etc/local-noip/correo/mensaje.txt<<EOF
+Recibe este mensaje porque la IP del servidor ha cambiado.
+Se recomienda que apunte la ip o no borre este mensaje ya que no se le mandará ninguna otra a no ser que cambie de nuevo.
+
+Por favor, no responda a este mensaje.
+
+La última dirección IP conocida es:
+EOF
 
 #creamos el archivo de rutas y variables
 echo "ruta=/etc/local-noip" > /etc/local-noip/localnoip.conf
