@@ -2,16 +2,14 @@ README
 
 --Requisitos--
 El instalador debe ejecutarse con permisos de administrador.
-También se requiere tener instalado y configurado:
-sendmail
-curl.
+También se requiere tener instalado y configurado sendmail y curl.
 
 --Función--
 La aplicación envía por email la ip si esta ha cambiado, hace una comprobación al arranque y cada 10 minutos. Si por alguna razón se pierde la conexión las comprobaciones pasan a realizarse en intervalos de 5 minutos.
-También se puede hacer de forma manual ejecutando mailing.sh
+También se puede hacer de forma manual ejecutando noip.sh
 
 Se dispone de archivos de texto para configurar los campos del email.
-Dichos archivos se configuran en la instalación pero se pueden cambiar de forma manual o haciendo uso de la herramienta "noip.sh"
+Dichos archivos se configuran en la instalación pero se pueden cambiar de forma manual o haciendo uso de la herramienta "config.sh"
 
 La disposición de los ficheros es la siguiente:
 /etc/local-noip/localnoip.conf --> Configuración básica de la aplicación.
