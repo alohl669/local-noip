@@ -5,6 +5,7 @@ rutaapp=$(pwd)
 
 #creamos los directorios de instalacion
 mkdir /etc/local-noip
+mkdir /etc/local-noip/correo
 mkdir /etc/local-noip/backup
 
 #Creamos los archivos para la funcion de mailing
