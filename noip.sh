@@ -2,9 +2,7 @@
 ############## 1 script version#############
 #var
 #var rutas globales
-ruta=/etc/local-noip
-ruta_correo=/etc/local-noip/correo
-rutaapp=$(cat /etc/local-noip/localnoip.conf)
+source /etc/local-noip/localnoip.conf
 
 #functions
 function mailing{

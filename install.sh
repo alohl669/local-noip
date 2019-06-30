@@ -1,7 +1,7 @@
 #!/bin/bash
 #var
 #pillamos la ruta desde donde se instala
-ruta=$(pwd)
+rutaapp=$(pwd)
 
 #creamos los directorios de instalacion
 mkdir /etc/local-noip
@@ -11,8 +11,10 @@ mkdir /etc/local-noip/backup
 tar -xzvf correo.tar.gz -C /etc/local-noip
 rm correo.tar.gz
 
-#creamos el archivo de rutas y variables - hay que meter las generales
-echo "$ruta" > /etc/local-noip/localnoip.conf
+#creamos el archivo de rutas y variables
+echo "ruta=/etc/local-noip" > /etc/local-noip/localnoip.conf
+echo "ruta_correo=/etc/local-noip/correo" >> /etc/local-noip/localnoip.conf
+echo "rutaapp=$rutaapp" >> /etc/local-noip/localnoip.conf
 
 #creamos los archivos que se usarán mas adelante - mas adelante se creara en el mismo archivo de rutas
 touch /etc/local-noip/ipold.conf
@@ -20,8 +22,8 @@ touch /etc/local-noip/cronr.conf
 #
 #copia de seguridad de crontab y linea de ejecución a mailing por ahora
 #echo "# local-noip se ha instalado en $ruta" >> /etc/crontab
-echo "@reboot root sleep 30 ; sh $ruta/noip.sh" >> /etc/crontab
-echo "00,10,20,30,40,50 * * * * root sh $ruta/noip.sh" >> /etc/crontab
+echo "@reboot root sleep 30 ; sh $rutaapp/noip.sh" >> /etc/crontab
+echo "00,10,20,30,40,50 * * * * root sh $rutaapp/noip.sh" >> /etc/crontab
 cp /etc/crontab /etc/local-noip/crontab.tipo
 #
 #Instalación asistida
