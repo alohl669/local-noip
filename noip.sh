@@ -5,14 +5,15 @@
 source /etc/local-noip/localnoip.conf
 
 #functions
-function mailing{
+function mailing(){
   #var function
-  ipname=$(curl ifconfig.me)
-  destino=$(cat $ruta_correo/libreta.txt)
-  remitente=$(cat $ruta_correo/remitente.txt)
-  asunto=$(cat $ruta_correo/asunto.txt)
-  mensaje=$(cat $ruta_correo/mensaje.txt)
+  local ipname=$(curl ifconfig.me)
+  local destino=$(cat $ruta_correo/libreta.txt)
+  local remitente=$(cat $ruta_correo/remitente.txt)
+  local asunto=$(cat $ruta_correo/asunto.txt)
+  local mensaje=$(cat $ruta_correo/mensaje.txt)
 
+#mandamos el email
 /usr/sbin/sendmail $destino<<EOF
 Subject: $asunto
 From: $remitente
@@ -21,10 +22,10 @@ $ipname
 EOF
 }
 
-function equalip{
+function equalip(){
   #var function
-  ipnew=$(curl ifconfig.me)
-  ipold=$(cat $ruta/ipold.conf)
+  local ipnew=$(curl ifconfig.me)
+  local ipold=$(cat $ruta/ipold.conf)
 
   #Comprobamos IP vieja o tomada anteriormente y de no coincidir mandamos la info y registramos la ip
   if
@@ -34,10 +35,10 @@ function equalip{
   fi
 }
 
-function lanstatus{
+function lanstatus(){
   #var function
-  ploss=$(ping -c 1 google.com | grep packets | awk '{ print $6 }')
-  cronsts=$(cat $ruta/cronr.conf)
+  local ploss=$(ping -c 1 google.com | grep packets | awk '{ print $6 }')
+  local cronsts=$(cat $ruta/cronr.conf)
   #alias function
   alias cpcrontab='cp /etc/crontab $ruta/crontab.tipo'
   alias cpcrntipo='cp $ruta/crontab.tipo /etc/crontab'
