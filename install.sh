@@ -1,30 +1,27 @@
 #!/bin/bash
-#instalador basico para local-noip
-#La idea es copiar el cron original del usuario para no plancharlo
-#y añadir la linea necesaria que hara posible esta aplicación
-#mas adelante se repetirá el proceso de la misma forma sin comprometer 
-#las nuevas incorporaciones
-#
-#variables basicas
+#var
+#pillamos la ruta desde donde se instala
 ruta=$(pwd)
-#para el tema rutas podemos barajar varias formas, la primera con la cutrada 
-#de añadir la direccion a crontab y capturarla con
-#cat /etc/crontab | grep instalado | awk '{ print $7 }'
-#lo cual es bastante cutre
-#
-#La otra opción es dejar localnoip.conf en /etc/local-noip/ Probemos:
+
+#creamos los directorios de instalacion
 mkdir /etc/local-noip
 mkdir /etc/local-noip/backup
+
+#esta parte hay que revisarla, paso de tener un tar
 tar -xzvf correo.tar.gz -C /etc/local-noip
 rm correo.tar.gz
+
+#creamos el archivo de rutas y variables - hay que meter las generales
 echo "$ruta" > /etc/local-noip/localnoip.conf
+
+#creamos los archivos que se usarán mas adelante - mas adelante se creara en el mismo archivo de rutas
 touch /etc/local-noip/ipold.conf
 touch /etc/local-noip/cronr.conf
 #
 #copia de seguridad de crontab y linea de ejecución a mailing por ahora
 #echo "# local-noip se ha instalado en $ruta" >> /etc/crontab
-echo "@reboot root sleep 30 ; sh $ruta/lanstatus.sh" >> /etc/crontab
-echo "00,10,20,30,40,50 * * * * root sh $ruta/lanstatus.sh" >> /etc/crontab
+echo "@reboot root sleep 30 ; sh $ruta/noip.sh" >> /etc/crontab
+echo "00,10,20,30,40,50 * * * * root sh $ruta/noip.sh" >> /etc/crontab
 cp /etc/crontab /etc/local-noip/crontab.tipo
 #
 #Instalación asistida

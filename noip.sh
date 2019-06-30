@@ -1,41 +1,60 @@
 #!/bin/bash
-#variables basicas
-#
-#Instalación asistida
-cp /etc/local-noip/correo/asunto.txt /etc/local-noip/backup/
-cp /etc/local-noip/correo/libreta.txt /etc/local-noip/backup/
-cp /etc/local-noip/correo/remitente.txt /etc/local-noip/backup/
-cp /etc/local-noip/correo/mensaje.txt /etc/local-noip/backup/
-echo "##########################################"
-echo "               LOCAL-NOIP"
-echo "##########################################"
-echo ""
-echo "Se van a cambiar los valores por defecto de la utilidad de correo, por su seguridad se ha realizado una copia de seguridad que usted deberá restaurar en caso de fallo, lease el README para comprobar la relacion de directorios para asi poder restaurar de forma adecuada su configuración anterior. Si por alguna razón no desea hacer ningún cambio simplemete no rellene el formulario"
-echo ""
-echo "Introduzca la nueva dirección de correo que va a usar esta maquina como remitente(pulse intro para mantener la dirección actual): "
-read remitente
-if [ "$remitente" != ""  ]; then
-echo "$remitente" > /etc/local-noip/correo/remitente.txt
-fi
-#
-echo "Ahora escriba el Asunto del correo(pulse intro para mantener el asunto actual): "
-read asunto
-if [ "$asunto" != ""  ]; then
-echo "$asunto" > /etc/local-noip/correo/asunto.txt
-fi
-#
-echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
-read email
-if [ "$email" != "" ]; then
-echo "$email" >> /etc/local-noip/correo/libreta.txt
-while [ "$email" != "" ]; do
-        echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
-        read email
-        if [ "$email" != ""  ]; then
-        echo "$email" >> /etc/local-noip/correo/libreta.txt
-        else echo "De acuerdo"
-        fi
-done
-fi
-#
-echo "Actualización terminada, muchas gracias."
+############## 1 script version#############
+#var
+#var rutas globales
+ruta=/etc/local-noip
+ruta_correo=/etc/local-noip/correo
+rutaapp=$(cat /etc/local-noip/localnoip.conf)
+
+#functions
+function mailing{
+  #var function
+  ipname=$(curl ifconfig.me)
+  destino=$(cat $ruta_correo/libreta.txt)
+  remitente=$(cat $ruta_correo/remitente.txt)
+  asunto=$(cat $ruta_correo/asunto.txt)
+  mensaje=$(cat $ruta_correo/mensaje.txt)
+
+/usr/sbin/sendmail $destino<<EOF
+Subject: $asunto
+From: $remitente
+$mensaje
+$ipname
+EOF
+}
+
+function equalip{
+  #var function
+  ipnew=$(curl ifconfig.me)
+  ipold=$(cat $ruta/ipold.conf)
+
+  #Comprobamos IP vieja o tomada anteriormente y de no coincidir mandamos la info y registramos la ip
+  if
+  	[ "$ipnew" != "$ipold"  ];
+  	then mailing
+  	echo "$ipnew" > $ruta/ipold.conf
+  fi
+}
+
+function lanstatus{
+  #var function
+  ploss=$(ping -c 1 google.com | grep packets | awk '{ print $6 }')
+  cronsts=$(cat $ruta/cronr.conf)
+  #alias function
+  alias cpcrontab='cp /etc/crontab $ruta/crontab.tipo'
+  alias cpcrntipo='cp $ruta/crontab.tipo /etc/crontab'
+
+  if [ "$ploss" = "0%" ]; then
+  	echo "no" > $ruta/cronr.conf
+  	cpcrntipo
+  	equalip
+  else
+  	if [ "$cronsts" != "si" ]; then
+  		echo "si" > $ruta/cronr.conf
+  		cpcrontab
+  		echo "05,15,25,35,45,55 * * * * root sh $rutaapp/noip.sh" >> /etc/crontab
+  	fi
+  fi
+}
+
+lanstatus
