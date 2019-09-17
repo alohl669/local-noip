@@ -1,11 +1,17 @@
 #!/bin/bash
-#variables basicas
-#
-#Instalación asistida
-cp /etc/local-noip/correo/asunto.txt /etc/local-noip/backup/
-cp /etc/local-noip/correo/libreta.txt /etc/local-noip/backup/
-cp /etc/local-noip/correo/remitente.txt /etc/local-noip/backup/
-cp /etc/local-noip/correo/mensaje.txt /etc/local-noip/backup/
+# Configuración asistida
+
+# pedimos sudo
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+  echo "Esta aplicación requiere de permisos sudo"
+  exit
+fi
+
+CONFIG
+cp $correoPath/asunto.txt $correoPath/asunto.bak
+cp $correoPath/libreta.txt $correoPath/libreta.bak
+cp $correoPath/remitente.txt $correoPath/remitente.bak
+cp $correoPath/mensaje.txt $correoPath/mensaje.bak
 echo "##########################################"
 echo "               LOCAL-NOIP"
 echo "##########################################"
@@ -15,27 +21,30 @@ echo ""
 echo "Introduzca la nueva dirección de correo que va a usar esta maquina como remitente(pulse intro para mantener la dirección actual): "
 read remitente
 if [ "$remitente" != ""  ]; then
-echo "$remitente" > /etc/local-noip/correo/remitente.txt
+  echo "$remitente" > $correoPath/remitente.txt
 fi
-#
+
+
 echo "Ahora escriba el Asunto del correo(pulse intro para mantener el asunto actual): "
 read asunto
 if [ "$asunto" != ""  ]; then
-echo "$asunto" > /etc/local-noip/correo/asunto.txt
+  echo "$asunto" > $correoPath/asunto.txt
 fi
-#
+
+
 echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
 read email
 if [ "$email" != "" ]; then
-echo "$email" >> /etc/local-noip/correo/libreta.txt
+  echo "$email" >> $correoPath/libreta.txt
 while [ "$email" != "" ]; do
-        echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
-        read email
-        if [ "$email" != ""  ]; then
-        echo "$email" >> /etc/local-noip/correo/libreta.txt
-        else echo "De acuerdo"
-        fi
+  echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
+  read email
+  if [ "$email" != ""  ]; then
+    echo "$email" >> $correoPath/libreta.txt
+  else
+    echo "De acuerdo"
+  fi
 done
 fi
-#
+
 echo "Actualización terminada, muchas gracias."

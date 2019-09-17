@@ -1,0 +1,59 @@
+#!/bin/bash
+###########
+# La idea es hacer un ping a google por ejemplo que devuelva una sola linea
+# y que de esa linea capture una palabra reprensentativa del estado de conexión
+# pillamos rutas
+CONFIG
+
+# variables
+ploss=$(ping -c 1 google.com | grep packets | awk '{ print $6 }')
+cronsts=$(cat $confPath/cronr.conf)
+ipnew=$(curl ifconfig.me)
+ipold=$(cat $confPath/ipold.conf)
+destino=$(cat $correoPath/libreta.txt)
+remitente=$(cat $correoPath/remitente.txt)
+asunto=$(cat $correoPath/asunto.txt)
+mensaje=$(cat $correoPath/mensaje.txt)
+
+# funciones
+mailing() {
+	# enviamos mail
+	ip=$(curl ifconfig.me)
+/usr/sbin/sendmail $destino <<EOF
+Subject: $asunto
+From: $remitente
+$mensaje
+$ip
+EOF
+}
+
+equalip() {
+	#Comprobamos IP vieja o tomada anteriormente y de no coincidir
+	# mandamos la info y registramos la ip
+	if [ "$ipnew" != "$ipold"  ]; then
+		mailing
+		echo "$ipnew" > $confPath/ipold.conf
+	fi
+}
+
+checklan() {
+	if [ "$ploss" = "0%" ]; then
+		echo "no" > $confPath/cronr.conf
+		cp $prPath/crontab.tipo /etc/crontab
+		equalip
+	else
+		if [ "$cronsts" != "si" ]; then
+			echo "si" > $confPath/cronr.conf
+			cp /etc/crontab $prPath/crontab.tipo
+			echo "05,15,25,35,45,55 * * * * root bash $binPath/noip" >> /etc/crontab
+		fi
+	fi
+}
+
+# comenzamos
+# pedimos sudo
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+  echo "Esta aplicación requiere de permisos sudo"
+  exit
+fi
+checklan

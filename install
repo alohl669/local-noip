@@ -1,0 +1,88 @@
+#!/bin/bash
+# instalador basico para local-noip
+# La idea es copiar el cron original del usuario para no plancharlo
+# y añadir la linea necesaria que hara posible esta aplicación
+# mas adelante se repetirá el proceso de la misma forma sin comprometer
+#l as nuevas incorporaciones
+
+# pedimos sudo
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+  echo "Esta aplicación requiere de permisos sudo"
+  exit
+fi
+
+# asignamos
+#   nombre empresa
+#   nombre proyecto
+project=.localnoip # Esto varía segun proyecto
+
+# asignamos variables de rutas basicas
+prVersion="2.0-test"
+prPath=/home/$USER/$project
+binPath=/home/$USER/$project/binaries
+confPath=/home/$USER/$project/config
+correoPath=/home/$USER/$project/correo
+
+# creamos directorios
+# van separados porque no se pretende que cuelguen del mismo directorio
+mkdir -p $prPath
+mkdir -p $binPath
+mkdir -p $confPath
+mkdir -p $correoPath
+
+# creamos .config inicial en ruta de configuracion de proyecto
+echo "# $project Congif Ver. $prVersion" > $confPath/.config
+echo "project=$project" >> $confPath/.config
+echo "prPath=/home/$USER/$project" >> $confPath/.config
+echo "binPath=/home/$USER/$project/binaries" >> $confPath/.config
+echo "confPath=/home/$USER/$project/config" >> $confPath/.config
+echo "correoPath=/home/$USER/$project/correo" >> $confPath/.config
+
+# copiamos binarios estableciendo el source-archivo configuración para los scripts que sea necesario
+sed "/CONFIG/c\source $confPath/.config" configure > $binPath/configure
+sed "/CONFIG/c\source $confPath/.config" noip > $binPath/noip
+
+# Asignamos propietario de toda su carpeta
+chown -R $USER:$USER $prPath
+
+# creamos los ficheros de ip's
+touch $confPath/ipold.conf
+touch $confPath/cronr.conf
+
+#copia de seguridad de crontab y linea de ejecución a mailing por ahora
+#echo "# local-noip se ha instalado en $prPath" >> /etc/crontab
+echo "@reboot root sleep 30 ; bash $binPath/noip" >> /etc/crontab
+echo "00,10,20,30,40,50 * * * * root bash $binPath/noip" >> /etc/crontab
+cp /etc/crontab $prPath/crontab.tipo
+
+#Instalación asistida
+
+echo "Por favor, introduzca la dirección de correo que va a usar esta maquina como remitente: "
+read remitente
+echo "$remitente" > $correoPath/remitente.txt
+echo "Ahora escriba el Asunto del correo: "
+read asunto
+echo "$asunto" > $correoPath/asunto.txt
+echo "A continuación escriba una única direccion de correo destinatario: "
+read email
+echo "$email" > $correoPath/libreta.txt
+
+while [ "$email" != "" ]; do
+	echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
+	read email
+	if [ "$email" != ""  ]; then
+	echo "$email" >> $correoPath/libreta.txt
+	else echo "De acuerdo"
+	fi
+done
+
+cat>>$correoPath/mensaje.txt<<EOF
+Recibe este mensaje porque la IP del servidor ha cambiado.
+Se recomienda que apunte la ip o no borre este mensaje ya que no se le mandará ninguna otra a no ser que cambie de nuevo.
+
+Por favor, no responda a este mensaje.
+
+La última dirección IP conocida es:
+EOF
+
+echo "Instalación terminada, muchas gracias."
