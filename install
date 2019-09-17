@@ -15,9 +15,9 @@ fi
 #   nombre empresa
 #   nombre proyecto
 project=.localnoip # Esto varía segun proyecto
+prVersion="2.0-test.02"
 
 # asignamos variables de rutas basicas
-prVersion="2.0-test"
 prPath=/home/$USER/$project
 binPath=/home/$USER/$project/binaries
 confPath=/home/$USER/$project/config

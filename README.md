@@ -1,12 +1,7 @@
-README
+# LOCAL-NOIP
 
---Requisitos--
-El instalador debe ejecutarse con permisos de administrador.
-También se requiere tener instalado y configurado:
-sendmail
-curl.
+## Descripción
 
---Función--
 La aplicación envía por email la ip si esta ha cambiado, hace una comprobación al arranque y cada 10 minutos. Si por alguna razón se pierde la conexión las comprobaciones pasan a realizarse en intervalos de 5 minutos.
 También se puede hacer de forma manual ejecutando mailing.sh
 
@@ -21,3 +16,10 @@ La disposición de los ficheros es la siguiente:
 /etc/local-noip/correo/mensaje.txt --> Contiene el mensaje que se enviará en el email
 /etc/local-noip/crontab.tipo --> Copia de Seguridad de crontab
 /etc/local-noip/backup/ --> Copia de seguridad de los parámetro de correo
+
+### Requisitos
+
+El instalador debe ejecutarse con permisos de administrador.
+También se requiere tener instalado y configurado:
+sendmail
+curl.
