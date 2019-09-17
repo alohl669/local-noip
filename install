@@ -1,31 +1,36 @@
 #!/bin/bash
 # instalador basico para local-noip
-# La idea es copiar el cron original del usuario para no plancharlo
+# Copiar el crontab original para no plancharlo
 # y añadir la linea necesaria que hara posible esta aplicación
 # mas adelante se repetirá el proceso de la misma forma sin comprometer
 #l as nuevas incorporaciones
 
 # pedimos sudo
-if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+if [[ $(id -u) -ne 0 ]]; then
   echo "Esta aplicación requiere de permisos sudo"
   exit
 fi
 
-# asignamos
-#   nombre empresa
-#   nombre proyecto
+# asignamos datos
 project=.localnoip # Esto varía segun proyecto
-prVersion="2.0-test.02"
+prVersion="2.0-test.03"
 
 # asignamos variables de rutas basicas
-prPath=/home/$USER/$project
-binPath=/home/$USER/$project/binaries
-confPath=/home/$USER/$project/config
-correoPath=/home/$USER/$project/correo
+# hay que arreglar el parametro $USER ya que coge root
+# por ahora usarmeos una ñapa again
+usuario=$(sudo pwd | awk '{split($0, a, "/"); print a[3]}')
+compUsur=$(ls /home/ | grep $usuario)
+if [[ $usuario != $compUsur ]]; then
+  echo "No ejecute el instalador fuera de una carpeta usuario"
+  exit
+fi
+prPath=/home/$usuario/$project
+binPath=/home/$usuario/$project/binaries
+confPath=/home/$usuario/$project/config
+correoPath=/home/$usuario/$project/correo
 
 # creamos directorios
 # van separados porque no se pretende que cuelguen del mismo directorio
-mkdir -p $prPath
 mkdir -p $binPath
 mkdir -p $confPath
 mkdir -p $correoPath
@@ -33,17 +38,17 @@ mkdir -p $correoPath
 # creamos .config inicial en ruta de configuracion de proyecto
 echo "# $project Congif Ver. $prVersion" > $confPath/.config
 echo "project=$project" >> $confPath/.config
-echo "prPath=/home/$USER/$project" >> $confPath/.config
-echo "binPath=/home/$USER/$project/binaries" >> $confPath/.config
-echo "confPath=/home/$USER/$project/config" >> $confPath/.config
-echo "correoPath=/home/$USER/$project/correo" >> $confPath/.config
+echo "prPath=/home/$usuario/$project" >> $confPath/.config
+echo "binPath=/home/$usuario/$project/binaries" >> $confPath/.config
+echo "confPath=/home/$usuario/$project/config" >> $confPath/.config
+echo "correoPath=/home/$usuario/$project/correo" >> $confPath/.config
 
 # copiamos binarios estableciendo el source-archivo configuración para los scripts que sea necesario
 sed "/CONFIG/c\source $confPath/.config" configure > $binPath/configure
 sed "/CONFIG/c\source $confPath/.config" noip > $binPath/noip
 
 # Asignamos propietario de toda su carpeta
-chown -R $USER:$USER $prPath
+chown -R $usuario:$usuario $prPath
 
 # creamos los ficheros de ip's
 touch $confPath/ipold.conf

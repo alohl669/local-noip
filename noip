@@ -52,7 +52,7 @@ checklan() {
 
 # comenzamos
 # pedimos sudo
-if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+if [[ $(id -u) -ne 0 ]]; then
   echo "Esta aplicación requiere de permisos sudo"
   exit
 fi
