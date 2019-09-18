@@ -13,7 +13,7 @@ fi
 
 # asignamos datos
 project=.localnoip # Esto varía segun proyecto
-prVersion="2.0-test.03"
+prVersion="2.0-test.04"
 
 # asignamos variables de rutas basicas
 # hay que arreglar el parametro $USER ya que coge root
@@ -44,7 +44,6 @@ echo "confPath=/home/$usuario/$project/config" >> $confPath/.config
 echo "correoPath=/home/$usuario/$project/correo" >> $confPath/.config
 
 # copiamos binarios estableciendo el source-archivo configuración para los scripts que sea necesario
-sed "/CONFIG/c\source $confPath/.config" configure > $binPath/configure
 sed "/CONFIG/c\source $confPath/.config" noip > $binPath/noip
 
 # Asignamos propietario de toda su carpeta

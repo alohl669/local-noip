@@ -50,10 +50,74 @@ checklan() {
 	fi
 }
 
+configure() {
+	cp $correoPath/asunto.txt $correoPath/asunto.bak
+	cp $correoPath/libreta.txt $correoPath/libreta.bak
+	cp $correoPath/remitente.txt $correoPath/remitente.bak
+	cp $correoPath/mensaje.txt $correoPath/mensaje.bak
+	clear
+	echo "##########################################"
+	echo "               LOCAL-NOIP"
+	echo "##########################################"
+	echo ""
+	echo "Se van a cambiar los valores por defecto de la utilidad de correo, por su seguridad se ha realizado una copia de seguridad que usted deberá restaurar en caso de fallo, lease el README para comprobar la relacion de directorios para asi poder restaurar de forma adecuada su configuración anterior. Si por alguna razón no desea hacer ningún cambio simplemete no rellene el formulario"
+	echo ""
+	echo "Introduzca la nueva dirección de correo que va a usar esta maquina como remitente(pulse intro para mantener la dirección actual): "
+	read remitente
+	if [ "$remitente" != ""  ]; then
+  	echo "$remitente" > $correoPath/remitente.txt
+	fi
+
+
+	echo "Ahora escriba el Asunto del correo(pulse intro para mantener el asunto actual): "
+	read asunto
+	if [ "$asunto" != ""  ]; then
+  	echo "$asunto" > $correoPath/asunto.txt
+	fi
+
+
+	echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
+	read email
+	if [ "$email" != "" ]; then
+  	echo "$email" >> $correoPath/libreta.txt
+		while [ "$email" != "" ]; do
+  		echo "Desea añadir mas destinatarios?(pulse intro si no lo desea): "
+  		read email
+  		if [ "$email" != ""  ]; then
+    		echo "$email" >> $correoPath/libreta.txt
+  		else
+    		echo "De acuerdo"
+  		fi
+		done
+	fi
+
+	clear
+	echo "Actualización terminada, muchas gracias."
+}
+
 # comenzamos
 # pedimos sudo
 if [[ $(id -u) -ne 0 ]]; then
   echo "Esta aplicación requiere de permisos sudo"
   exit
 fi
-checklan
+
+if [[ $# -gt 0 ]]; then
+  #statements
+  case "$1" in
+		-c|--configure)
+		configure
+		;;
+  # -h|--help)
+  #     # No hacemos nada más, porque showhelp se saldrá del programa
+  #     showhelp
+  #     ;;
+  	*)
+    echo "Argumento no válido"
+    # showhelp
+    ;;
+  esac
+else
+  clear
+	checklan
+fi
