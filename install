@@ -13,7 +13,7 @@ fi
 
 # asignamos datos
 project=.localnoip # Esto varía segun proyecto
-prVersion="2.0-test.04"
+prVersion="2.0"
 
 # asignamos variables de rutas basicas
 # hay que arreglar el parametro $USER ya que coge root
